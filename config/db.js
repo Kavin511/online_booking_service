@@ -14,5 +14,5 @@ mysqlConnection.connect((err) => {
         console.log("Connected successfully!")
     }
 })
-mysqlConnection.query("use mysql")
+mysqlConnection.query("use " + dbConfig.database)
 module.exports = mysqlConnection

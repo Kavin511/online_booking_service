@@ -2,7 +2,11 @@ const mysqlConnection = require('../config/db')
 exports.booking = async (req, res) => {
     try {
         mysqlConnection.query('SELECT * FROM BOOKINGS', (err, rows, fields) => {
-            res.send(rows);
+            if (rows[0]) {
+                res.status(200).json({ "bookings": rows });
+            } else {
+                res.status(200).json({ "success": false, 'message': "No products found" });
+            }
         }
         );
     } catch (error) {
@@ -20,8 +24,10 @@ exports.updateBooking = async (req, res) => {
                         console.log(req.body);
                         res.status(200).json({ 'success': false, 'message': "Error while booking" + err.message })
                     } else {
-                        mysqlConnection.query("UPDATE GARAGE SET GARAGE_STATUS='INACTIVE' WHERE GARAGE_ID=" + garageId)
-                        res.status(200).json({ 'success': true, 'message': { 'garageName': garageName } })
+                        mysqlConnection.query("UPDATE GARAGE SET GARAGE_STATUS='INACTIVE' WHERE GARAGE_ID=" + garageId, (err, rows, fields) => {
+                            console.log(err);
+                        })
+                        res.status(200).json({ 'success': true, 'message': { 'garage': "Your service request has been mapped to " + garageName, 'garageId': garageId } })
                     }
                 })
         } else {
@@ -29,7 +35,7 @@ exports.updateBooking = async (req, res) => {
                 if (err) {
                     res.status(400).json({ 'success': false, 'message': err })
                 } else {
-                    res.status(200).json({ 'success': true, 'message': { 'garage': 'Booking queued successfully' } })
+                    res.status(200).json({ 'success': true, 'message': { 'garage': 'Your service request has been queued successfully!' } })
                 }
             })
         }

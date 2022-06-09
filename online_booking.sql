@@ -1,0 +1,8 @@
+CREATE TABLE BOOKINGS(BOOKING_ID int auto_increment primary key, CUSTOMER_NAME varchar(55) not null,GARAGE_ID LONG NOT NULL);
+CREATE TABLE GARAGE(GARAGE_ID int auto_increment primary key, GARAGE_NAME varchar(55) not null);
+
+INSERT INTO GARAGE(GARAGE_NAME) VALUES('Garage2');
+INSERT INTO BOOKINS(CUSTOMER_NAME,GARAGE_ID) VALUES('tvs Garage',1);
+select * from GARAGE;
+ALTER TABLE GARAGE ADD GARAGE_STATUS VARCHAR(25) DEFAULT "ACTIVE";
+update garage set garaget_status="ACTIVE";

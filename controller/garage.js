@@ -1,14 +1,17 @@
 const mysqlConnection = require('../config/db')
 
 exports.updateGarage = async (req, res) => {
+    if(req.body.garageId){
     mysqlConnection.query("UPDATE GARAGE SET GARAGE_STATUS='ACTIVE' WHERE GARAGE_ID=" + req.body.garageId, (err, rows, fields) => {
         console.log(err + " " + rows);
         if (err) {
-            res.status(400).json({ 'status': 400, 'message': 'Error while updating garage status' })
+            res.status(400).json({ 'status': 400, 'message': 'Error while updating garage status'+err.message })
         } else {
             updateGarageDetails(req, res, req.body.garageId);
         }
-    })
+    })} else {
+        res.status(400).json({ 'status': 400, 'message': 'Garage id is required - Field key garageId' })
+    }
 }
 
 exports.addGarage = async (req, res) => {
@@ -25,7 +28,7 @@ exports.addGarage = async (req, res) => {
             }
         })
     } else {
-        res.status(400).json({ "success": true, "message": "Garage name is required" })
+        res.status(400).json({ "success": false, "message": "Garage name is required Field key garageName" })
     }
 }
 

@@ -4,7 +4,9 @@ const connectDB = require('./config/db')
 const cors = require('cors')
 const bookingRoute = require('./routes/booking')
 const garageRoute = require('./routes/garage')
+const expressOasGenerator = require('express-oas-generator');
 var app = express()
+expressOasGenerator.init(app, {});
 connectDB
 
 app.use(bodyParser.urlencoded({

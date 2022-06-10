@@ -5,7 +5,7 @@ exports.booking = async (req, res) => {
             if (rows[0]) {
                 res.status(200).json({ "bookings": rows });
             } else {
-                res.status(200).json({ "success": false, 'message': "No products found" });
+                res.status(200).json({ "success": true, 'message': "No bookings found" });
             }
         }
         );
